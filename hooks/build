@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# DOCKER_ARGS gives the user the ability to add their own
+# additional arguments like --squash if enabled
+export DOCKER_ARGS=${DOCKER_ARGS:-}
+
+# $IMAGE_NAME var is injected into the build so the tag is correct.
+docker build ${DOCKER_ARGS} \
+            --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+            --build-arg VCS_REF=`git rev-parse --short HEAD` \
+            -t $IMAGE_NAME .
